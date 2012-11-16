@@ -22,7 +22,7 @@ There's another argument that prints the help: _-h_
 
 
 ### Local use ###
-Just add [the config file](https://github.com/amartinj/nagios3-memcheck/blob/master/config/mem.cfg) in one of the directories read by Nagios by default such as `/etc/nagios-plugins/config` or `/etc/nagios3/conf.d/` or any other specified with the `cfg_dir`. You can also add a specific entry location for the file itself with `cfg_file`.
+Just add [the config file](https://github.com/funddy/nagios3-memcheck/blob/master/config/mem.cfg) in one of the directories read by Nagios by default such as `/etc/nagios-plugins/config` or `/etc/nagios3/conf.d/` or any other specified with the `cfg_dir`. You can also add a specific entry location for the file itself with `cfg_file`.
 
 Done this, you can create a service using this command, and associate it to a host or a host group.
 
