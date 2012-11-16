@@ -1,4 +1,4 @@
-# nagios3-memcheck #
+# Nagios3 memory check plugin #
 
 Nagios3 plugin for monitoring free memory
 
@@ -42,5 +42,9 @@ Now, you just have to query the nrpe server asking it to execute the recently cr
 You should get something like this:
 
 `MEM OK - 31% free (158 MB out of 496 MB) |mem=158MB;10;0;0;496`
+
+And this is it. 
+
+Hope you enjoy ;)
 
 
