@@ -1,0 +1,48 @@
+#!/bin/sh
+TOTAL="`free -m | grep Mem | sed -r 's/\s+/ /g' | cut -f2 -d' '`"
+FREE="`free -m | grep Mem | sed -r 's/\s+/ /g' | cut -f4 -d' '`"
+FREEP="`echo "$FREE*100/$TOTAL" | bc`"
+
+usage(){
+cat << EOF
+usage: $0 options
+
+This script tells how much of memory is available
+
+OPTIONS:
+   -h      Show this message
+   -c      critical percentage of free memory
+   -w      warning percentage of free memory
+EOF
+}
+
+while getopts "hw:c:" OPTION
+do
+  case $OPTION in
+    h)
+      usage()
+      exit
+      ;;
+    w)
+      WARNING=$OPTARG
+      ;;
+    c)
+      CRITICAL=$OPTARG
+      ;;
+  esac
+done
+
+[ -z $WARNING ] && echo "MEM UNKNOWN - Need to pas -w option" && exit 3
+[ -z $CRITICAL ] && echo "MEM UNKNOWN - Need to pass -c option" && exit 3
+[ $WARNING -le $CRITICAL ] && echo "MEM UNKNOWN - -c has to be less than -w" && exit 3
+
+STATUS="OK"
+[ $FREEP -le $WARNING ] && STATUS="WARNING"
+[ $FREEP -le $CRITICAL ] && STATUS="CRITICAL"
+
+echo "MEM $STATUS - $FREEP% free ($FREE MB out of $TOTAL MB) |mem=${FREE}MB;$WARNING;$CRITICAL;0;$TOTAL"
+
+[ $STATUS = "OK" ] && exit 0
+[ $STATUS = "WARNING" ] && exit 1
+[ $STATUS = "CRITICAL" ] && exit 2
+exit 3
